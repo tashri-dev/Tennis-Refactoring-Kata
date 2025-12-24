@@ -20,7 +20,7 @@ public class Constants
 
     public class Players
     {
-        public const string Player1 = "Player1";
-        public const string Player2 = "Player2";
+        public const string Player1 = "player1";
+        public const string Player2 = "player2";
     }
 }
