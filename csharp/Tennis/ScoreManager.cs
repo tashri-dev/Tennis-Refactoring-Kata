@@ -8,23 +8,9 @@ public class ScoreManager
         var tempScore = 0;
         if (player1Score == player2Score)
         {
-            switch (player1Score)
-            {
-                case 0:
-                    score = Constants.Scores.Love_All;
-                    break;
-                case 1:
-                    score = Constants.Scores.Fifteen_All;
-                    break;
-                case 2:
-                    score = Constants.Scores.Thirty_All;
-                    break;
-                default:
-                    score = Constants.Scores.Deuce;
-                    break;
-            }
+            score = CalculateDrawScore(player1Score);
         }
-        else if (player1Score >= 4 || player2Score >= 4)
+        if (player1Score >= 4 || player2Score >= 4)
         {
             var minusResult = player1Score - player2Score;
             if (minusResult == 1) score = Constants.Scores.AdvantagePlayer1;
@@ -61,6 +47,20 @@ public class ScoreManager
             }
         }
 
+        return score;
+    }
+    
+    
+    
+    private string CalculateDrawScore(int playerScore)
+    {
+        string score = playerScore switch
+        {
+            0 => Constants.Scores.Love_All,
+            1 => Constants.Scores.Fifteen_All,
+            2 => Constants.Scores.Thirty_All,
+            _ => Constants.Scores.Deuce
+        };
         return score;
     }
 }
