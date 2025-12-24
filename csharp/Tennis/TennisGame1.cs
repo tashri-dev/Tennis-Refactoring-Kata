@@ -1,16 +1,20 @@
+using System;
+
 namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
         private int m_score1 = 0;
         private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
 
+        private  Player[] players = new Player[2];
+        private const int Player1Index = 0;
+        private const int Player2Index = 1;
+        
         public TennisGame1(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            this.players[Player1Index]= new Player(player1Name);
+            this.players[Player2Index]= new Player(player2Name);
         }
 
         public void WonPoint(string playerName)
@@ -20,7 +24,7 @@ namespace Tennis
             else
                 m_score2 += 1;
         }
-
+        
         public string GetScore()
         {
             string score = "";
