@@ -28,9 +28,6 @@ namespace Tennis
             return scoreManager.CalculateScore(player1Score, player2Score);
         }
         
-        
-        
-        //get player by Name from players array
         private Player GetPlayerByName(string playerName)
         {
             foreach (var player in players)
