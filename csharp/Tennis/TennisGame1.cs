@@ -4,9 +4,6 @@ namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
-
         private  Player[] players = new Player[2];
         private const int Player1Index = 0;
         private const int Player2Index = 1;
@@ -19,19 +16,19 @@ namespace Tennis
 
         public void WonPoint(string playerName)
         {
-            if (playerName == Constants.Players.Player1)
-                m_score1 += 1;
-            else
-                m_score2 += 1;
+            var player = GetPlayerByName(playerName);
+            player.WinPoint();
         }
         
         public string GetScore()
         {
+            int player1Score = players[Player1Index].Score;
+            int player2Score = players[Player2Index].Score;
             string score = "";
             var tempScore = 0;
-            if (m_score1 == m_score2)
+            if (player1Score== player2Score)
             {
-                switch (m_score1)
+                switch (player1Score)
                 {
                     case 0:
                         score = Constants.Scores.Love_All;
@@ -48,9 +45,9 @@ namespace Tennis
 
                 }
             }
-            else if (m_score1 >= 4 || m_score2 >= 4)
+            else if (player1Score >= 4 || player2Score >= 4)
             {
-                var minusResult = m_score1 - m_score2;
+                var minusResult = player1Score - player2Score;
                 if (minusResult == 1) score = Constants.Scores.AdvantagePlayer1;
                 else if (minusResult == -1) score = Constants.Scores.AdvantagePlayer2;
                 else if (minusResult >= 2) score = Constants.Scores.WinForPlayer1;
@@ -60,8 +57,8 @@ namespace Tennis
             {
                 for (var i = 1; i < 3; i++)
                 {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
+                    if (i == 1) tempScore = player1Score;
+                    else { score += "-"; tempScore = player2Score; }
                     switch (tempScore)
                     {
                         case 0:
@@ -80,6 +77,21 @@ namespace Tennis
                 }
             }
             return score;
+        }
+        
+        
+        
+        //get player by Name from players array
+        private Player GetPlayerByName(string playerName)
+        {
+            foreach (var player in players)
+            {
+                if (player.Name == playerName)
+                {
+                    return player;
+                }
+            }
+            return null;
         }
     }
 }
