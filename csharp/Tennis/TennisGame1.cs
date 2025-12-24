@@ -30,16 +30,16 @@ namespace Tennis
                 switch (m_score1)
                 {
                     case 0:
-                        score = "Love-All";
+                        score = Constants.Scores.Love_All;
                         break;
                     case 1:
-                        score = "Fifteen-All";
+                        score = Constants.Scores.Fifteen_All;
                         break;
                     case 2:
-                        score = "Thirty-All";
+                        score = Constants.Scores.Thirty_All;
                         break;
                     default:
-                        score = "Deuce";
+                        score = Constants.Scores.Deuce;
                         break;
 
                 }
@@ -47,10 +47,10 @@ namespace Tennis
             else if (m_score1 >= 4 || m_score2 >= 4)
             {
                 var minusResult = m_score1 - m_score2;
-                if (minusResult == 1) score = "Advantage player1";
-                else if (minusResult == -1) score = "Advantage player2";
-                else if (minusResult >= 2) score = "Win for player1";
-                else score = "Win for player2";
+                if (minusResult == 1) score = Constants.Scores.AdvantagePlayer1;
+                else if (minusResult == -1) score = Constants.Scores.AdvantagePlayer2;
+                else if (minusResult >= 2) score = Constants.Scores.WinForPlayer1;
+                else score = Constants.Scores.WinForPlayer2;
             }
             else
             {
@@ -61,16 +61,16 @@ namespace Tennis
                     switch (tempScore)
                     {
                         case 0:
-                            score += "Love";
+                            score += Constants.Scores.Love;
                             break;
                         case 1:
-                            score += "Fifteen";
+                            score += Constants.Scores.Fifteen;
                             break;
                         case 2:
-                            score += "Thirty";
+                            score += Constants.Scores.Thirty;
                             break;
                         case 3:
-                            score += "Forty";
+                            score += Constants.Scores.Forty;
                             break;
                     }
                 }
