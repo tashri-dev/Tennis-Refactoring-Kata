@@ -1,7 +1,7 @@
 using System;
 
 namespace Tennis;
-
+//todo: fix the miss of the calculations with delgates or startegy pattern
 public class ScoreManager
 {
     public string CalculateScore(int player1Score, int player2Score)
