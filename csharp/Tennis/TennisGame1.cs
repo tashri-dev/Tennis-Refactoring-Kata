@@ -20,6 +20,16 @@ namespace Tennis
             player.WinPoint();
         }
         
+        public string GetScore()
+        {
+            int player1Score = players[Player1Index].Score;
+            int player2Score = players[Player2Index].Score;
+            var scoreManager = new ScoreManager();
+            return scoreManager.CalculateScore(player1Score, player2Score);
+        }
+        
+        
+        
         //get player by Name from players array
         private Player GetPlayerByName(string playerName)
         {
