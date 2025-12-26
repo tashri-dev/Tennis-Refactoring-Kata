@@ -23,83 +23,83 @@ namespace Tennis
             if (p1point == p2point && p1point < 3)
             {
                 if (p1point == 0)
-                    score = "Love";
+                    score = Constants.Scores.Love;
                 if (p1point == 1)
-                    score = "Fifteen";
+                    score = Constants.Scores.Fifteen;
                 if (p1point == 2)
-                    score = "Thirty";
-                score += "-All";
+                    score = Constants.Scores.Thirty;
+                score += Constants.Scores.All;
             }
             if (p1point == p2point && p1point > 2)
-                score = "Deuce";
+                score = Constants.Scores.Deuce;
 
             if (p1point > 0 && p2point == 0)
             {
                 if (p1point == 1)
-                    p1res = "Fifteen";
+                    p1res = Constants.Scores.Fifteen;
                 if (p1point == 2)
-                    p1res = "Thirty";
+                    p1res = Constants.Scores.Thirty;
                 if (p1point == 3)
-                    p1res = "Forty";
+                    p1res = Constants.Scores.Forty;
 
-                p2res = "Love";
+                p2res = Constants.Scores.Love;
                 score = p1res + "-" + p2res;
             }
             if (p2point > 0 && p1point == 0)
             {
                 if (p2point == 1)
-                    p2res = "Fifteen";
+                    p2res = Constants.Scores.Fifteen;
                 if (p2point == 2)
-                    p2res = "Thirty";
+                    p2res = Constants.Scores.Thirty;
                 if (p2point == 3)
-                    p2res = "Forty";
+                    p2res = Constants.Scores.Forty;
 
-                p1res = "Love";
+                p1res = Constants.Scores.Love;
                 score = p1res + "-" + p2res;
             }
 
-            if (p1point > p2point && p1point < 4)
+            if (p1point > p2point && p1point < Constants.Scores.WinScore)
             {
                 if (p1point == 2)
-                    p1res = "Thirty";
+                    p1res = Constants.Scores.Thirty;
                 if (p1point == 3)
-                    p1res = "Forty";
+                    p1res = Constants.Scores.Forty;
                 if (p2point == 1)
-                    p2res = "Fifteen";
+                    p2res = Constants.Scores.Fifteen;
                 if (p2point == 2)
-                    p2res = "Thirty";
+                    p2res = Constants.Scores.Thirty;
                 score = p1res + "-" + p2res;
             }
-            if (p2point > p1point && p2point < 4)
+            if (p2point > p1point && p2point < Constants.Scores.WinScore)
             {
                 if (p2point == 2)
-                    p2res = "Thirty";
+                    p2res = Constants.Scores.Thirty;
                 if (p2point == 3)
-                    p2res = "Forty";
+                    p2res = Constants.Scores.Forty;
                 if (p1point == 1)
-                    p1res = "Fifteen";
+                    p1res = Constants.Scores.Fifteen;
                 if (p1point == 2)
-                    p1res = "Thirty";
+                    p1res = Constants.Scores.Thirty;
                 score = p1res + "-" + p2res;
             }
 
             if (p1point > p2point && p2point >= 3)
             {
-                score = "Advantage player1";
+                score = Constants.Scores.AdvantagePlayer1;
             }
 
             if (p2point > p1point && p1point >= 3)
             {
-                score = "Advantage player2";
+                score = Constants.Scores.AdvantagePlayer2;
             }
 
             if (p1point >= 4 && p2point >= 0 && (p1point - p2point) >= 2)
             {
-                score = "Win for player1";
+                score = Constants.Scores.WinForPlayer1;
             }
             if (p2point >= 4 && p1point >= 0 && (p2point - p1point) >= 2)
             {
-                score = "Win for player2";
+                score = Constants.Scores.WinForPlayer2;
             }
             return score;
         }
