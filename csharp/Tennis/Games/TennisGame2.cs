@@ -103,39 +103,28 @@ namespace Tennis
             return score;
         }
 
-        public void SetP1Score(int number)
+       
+        public void WonPoint(string playerName)
         {
-            for (int i = 0; i < number; i++)
+            var player = GetPlayerByName(playerName);
+            player.WinPoint();
+            if (playerName == players[Player1Index].Name)
             {
-                P1Score();
+                player1Point = player.Score;
             }
-        }
-
-        public void SetP2Score(int number)
-        {
-            for (var i = 0; i < number; i++)
-            {
-                P2Score();
-            }
-        }
-
-        private void P1Score()
-        {
-            player1Point++;
-        }
-
-        private void P2Score()
-        {
-            player2Point++;
-        }
-
-        public void WonPoint(string player)
-        {
-            if (player == "player1")
-                P1Score();
             else
-                P2Score();
+            {
+                player2Point = player.Score;
+            }
         }
+
+        private Player GetPlayerByName(string playerName)
+        {
+            return (playerName == players[Player1Index].Name)
+                ? players[Player1Index]
+                : players[Player2Index];
+        }
+      
 
     }
 }
