@@ -16,5 +16,7 @@ public class Constants
         public const string WinForPlayer2 = "Win for player2";
         
         public const int WinScore = 4;
+        public const int LoveScore = 0;
+        public const int MinDifferenceForWin = 2;
     }
 }
