@@ -18,8 +18,8 @@ namespace Tennis
 
         public string GetScore()
         {
-           
-           return ScoreManager.CalculateScore(players[Player1Index], players[Player2Index]);
+           var scoreManager = new ScoreManager();
+           return scoreManager.CalculateScore(players[Player1Index], players[Player2Index]);
         }
 
        
