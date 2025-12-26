@@ -24,8 +24,7 @@ namespace Tennis
         {
             int player1Score = players[Player1Index].Score;
             int player2Score = players[Player2Index].Score;
-            var scoreManager = new ScoreManager();
-            return scoreManager.CalculateScore(player1Score, player2Score);
+            return ScoreManager.CalculateScore(player1Score, player2Score);
         }
         
         private Player GetPlayerByName(string playerName)
