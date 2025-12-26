@@ -18,4 +18,14 @@ public class Constants
         public const int WinScore = 4;
         public const int MinDifferenceForWin = 2;
     }
+    
+    public enum ScoreType:byte
+    {
+        Love,
+        Fifteen,
+        Thirty,
+        Forty,
+        Deuce,
+        Advantage, 
+    }
 }
