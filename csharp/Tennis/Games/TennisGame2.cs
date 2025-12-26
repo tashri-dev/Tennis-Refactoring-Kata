@@ -2,102 +2,101 @@ namespace Tennis
 {
     public class TennisGame2 : ITennisGame
     {
-        private int p1point;
-        private int p2point;
-
-        private string p1res = "";
-        private string p2res = "";
-        private string player1Name;
-        private string player2Name;
-
+        private int player1Point;
+        private int player2Point;
+        
+        Player[] players = new Player[2];
+        private const int Player1Index = 0;
+        private const int Player2Index = 1;
         public TennisGame2(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            p1point = 0;
-            this.player2Name = player2Name;
+            players[Player1Index] = new Player(player1Name);
+            player1Point = players[Player1Index].Score;
+            players[Player2Index] = new Player(player2Name);
+            
         }
 
         public string GetScore()
         {
             var score = "";
-            if (p1point == p2point && p1point < 3)
+            if (player1Point == player2Point && player1Point < 3)
             {
-                if (p1point == 0)
+                if (player1Point == 0)
                     score = Constants.Scores.Love;
-                if (p1point == 1)
+                if (player1Point == 1)
                     score = Constants.Scores.Fifteen;
-                if (p1point == 2)
+                if (player1Point == 2)
                     score = Constants.Scores.Thirty;
                 score += Constants.Scores.All;
             }
-            if (p1point == p2point && p1point > 2)
+            if (player1Point == player2Point && player1Point > 2)
                 score = Constants.Scores.Deuce;
 
-            if (p1point > 0 && p2point == 0)
+            if (player1Point > 0 && player2Point == 0)
             {
-                if (p1point == 1)
-                    p1res = Constants.Scores.Fifteen;
-                if (p1point == 2)
-                    p1res = Constants.Scores.Thirty;
-                if (p1point == 3)
-                    p1res = Constants.Scores.Forty;
+                if (player1Point == 1)
+                    players[Player1Index].Result = Constants.Scores.Fifteen;
+                if (player1Point == 2)
+                    players[Player1Index].Result = Constants.Scores.Thirty;
+                if (player1Point == 3)
+                    players[Player1Index].Result = Constants.Scores.Forty;
 
-                p2res = Constants.Scores.Love;
-                score = p1res + "-" + p2res;
+                players[Player2Index].Result = Constants.Scores.Love;
+                score = players[Player1Index].Result + "-" + players[Player2Index].Result;
             }
-            if (p2point > 0 && p1point == 0)
+            if (player2Point > 0 && player1Point == 0)
             {
-                if (p2point == 1)
-                    p2res = Constants.Scores.Fifteen;
-                if (p2point == 2)
-                    p2res = Constants.Scores.Thirty;
-                if (p2point == 3)
-                    p2res = Constants.Scores.Forty;
+                if (player2Point == 1)
+                    players[Player2Index].Result = Constants.Scores.Fifteen;
+                if (player2Point == 2)
+                    players[Player2Index].Result = Constants.Scores.Thirty;
+                if (player2Point == 3)
+                    players[Player2Index].Result = Constants.Scores.Forty;
 
-                p1res = Constants.Scores.Love;
-                score = p1res + "-" + p2res;
-            }
-
-            if (p1point > p2point && p1point < Constants.Scores.WinScore)
-            {
-                if (p1point == 2)
-                    p1res = Constants.Scores.Thirty;
-                if (p1point == 3)
-                    p1res = Constants.Scores.Forty;
-                if (p2point == 1)
-                    p2res = Constants.Scores.Fifteen;
-                if (p2point == 2)
-                    p2res = Constants.Scores.Thirty;
-                score = p1res + "-" + p2res;
-            }
-            if (p2point > p1point && p2point < Constants.Scores.WinScore)
-            {
-                if (p2point == 2)
-                    p2res = Constants.Scores.Thirty;
-                if (p2point == 3)
-                    p2res = Constants.Scores.Forty;
-                if (p1point == 1)
-                    p1res = Constants.Scores.Fifteen;
-                if (p1point == 2)
-                    p1res = Constants.Scores.Thirty;
-                score = p1res + "-" + p2res;
+                players[Player1Index].Result = Constants.Scores.Love;
+                score = players[Player1Index].Result + "-" + players[Player2Index].Result;
             }
 
-            if (p1point > p2point && p2point >= 3)
+            if (player1Point > player2Point && player1Point < Constants.Scores.WinScore)
+            {
+                if (player1Point == 2)
+                    players[Player1Index].Result = Constants.Scores.Thirty;
+                if (player1Point == 3)
+                    players[Player1Index].Result = Constants.Scores.Forty;
+                if (player2Point == 1)
+                    players[Player2Index].Result = Constants.Scores.Fifteen;
+                if (player2Point == 2)
+                    players[Player2Index].Result = Constants.Scores.Thirty;
+                score = players[Player1Index].Result + "-" + players[Player2Index].Result;
+            }
+            if (player2Point > player1Point && player2Point < Constants.Scores.WinScore)
+            {
+                if (player2Point == 2)
+                    players[Player2Index].Result = Constants.Scores.Thirty;
+                if (player2Point == 3)
+                    players[Player2Index].Result = Constants.Scores.Forty;
+                if (player1Point == 1)
+                    players[Player1Index].Result = Constants.Scores.Fifteen;
+                if (player1Point == 2)
+                    players[Player1Index].Result = Constants.Scores.Thirty;
+                score = players[Player1Index].Result + "-" + players[Player2Index].Result;
+            }
+
+            if (player1Point > player2Point && player2Point >= 3)
             {
                 score = Constants.Scores.AdvantagePlayer1;
             }
 
-            if (p2point > p1point && p1point >= 3)
+            if (player2Point > player1Point && player1Point >= 3)
             {
                 score = Constants.Scores.AdvantagePlayer2;
             }
 
-            if (p1point >= 4 && p2point >= 0 && (p1point - p2point) >= 2)
+            if (player1Point >= 4 && player2Point >= 0 && (player1Point - player2Point) >= 2)
             {
                 score = Constants.Scores.WinForPlayer1;
             }
-            if (p2point >= 4 && p1point >= 0 && (p2point - p1point) >= 2)
+            if (player2Point >= 4 && player1Point >= 0 && (player2Point - player1Point) >= 2)
             {
                 score = Constants.Scores.WinForPlayer2;
             }
@@ -122,12 +121,12 @@ namespace Tennis
 
         private void P1Score()
         {
-            p1point++;
+            player1Point++;
         }
 
         private void P2Score()
         {
-            p2point++;
+            player2Point++;
         }
 
         public void WonPoint(string player)
