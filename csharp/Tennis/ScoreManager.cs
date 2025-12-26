@@ -6,8 +6,6 @@ public class ScoreManager
 {
     public string CalculateScore(int player1Score, int player2Score)
     {
-        string score = "";
-        var tempScore = 0;
         if (player1Score == player2Score)
         {
             return CalculateDrawScore(player1Score);
