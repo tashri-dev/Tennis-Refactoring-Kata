@@ -17,10 +17,4 @@ public class Constants
         public const string WinForPlayer1 = "Win for player1";
         public const string WinForPlayer2 = "Win for player2";
     }
-
-    public class Players
-    {
-        public const string Player1 = "player1";
-        public const string Player2 = "player2";
-    }
 }
