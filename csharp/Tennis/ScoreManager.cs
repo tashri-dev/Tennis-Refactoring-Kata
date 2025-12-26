@@ -1,99 +1,59 @@
+using System;
+
 namespace Tennis;
 
-public abstract class ScoreManager
+public class ScoreManager
 {
-    public static string CalculateScore(Player firstPlayer, Player secondPlayer)
+    public string CalculateScore(Player firstPlayer, Player secondPlayer)
     {
         var player1Point = firstPlayer.Score;
         var player2Point = secondPlayer.Score;
 
-        var score = "";
-        if (player1Point == player2Point && player1Point < 3)
+        if (IsWin(player1Point, player2Point))
+            return GetWinnerPlayer(player1Point, player2Point);
+        if (IsAdvantage(player1Point, player2Point))
+            return GetAdvantagePlayer(player1Point, player2Point);
+        if (IsDeuce(player1Point, player2Point))
+            return Constants.Scores.Deuce;
+        if (IsDraw(player1Point, player2Point))
+            return GetScorePoint(player1Point) + Constants.Scores.All;
+
+        return $"{GetScorePoint(player1Point)}-{GetScorePoint(player2Point)}";
+    }
+
+    private bool IsDeuce(int player1Point, int player2Point) =>
+        player1Point == player2Point && player1Point > 2;
+
+
+    private bool IsDraw(int player1Point, int player2Point) =>
+        player1Point == player2Point && player1Point < 3;
+
+
+    private bool IsWin(int player1Point, int player2Point) =>
+        (player1Point >= Constants.Scores.WinScore || player2Point >= Constants.Scores.WinScore)
+        && Math.Abs(player1Point - player2Point) >= Constants.Scores.MinDifferenceForWin;
+
+
+    private string GetWinnerPlayer(int player1Point, int player2Point) =>
+        player1Point > player2Point ? Constants.Scores.WinForPlayer1 : Constants.Scores.WinForPlayer2;
+
+    private bool IsAdvantage(int player1Point, int player2Point) =>
+        player1Point >= 3 && player2Point >= 3 && Math.Abs(player1Point - player2Point) == 1;
+
+
+    private string GetAdvantagePlayer(int player1Point, int player2Point) =>
+        player1Point > player2Point ? Constants.Scores.AdvantagePlayer1 : Constants.Scores.AdvantagePlayer2;
+
+
+    private static string GetScorePoint(int score)
+    {
+        return score switch
         {
-            if (player1Point == 0)
-                score = Constants.Scores.Love;
-            if (player1Point == 1)
-                score = Constants.Scores.Fifteen;
-            if (player1Point == 2)
-                score = Constants.Scores.Thirty;
-            score += Constants.Scores.All;
-        }
-
-        if (player1Point == player2Point && player1Point > 2)
-            score = Constants.Scores.Deuce;
-
-        if (player1Point > Constants.Scores.LoveScore && player2Point == Constants.Scores.LoveScore)
-        {
-            if (player1Point == 1)
-                firstPlayer.Result = Constants.Scores.Fifteen;
-            if (player1Point == 2)
-                firstPlayer.Result = Constants.Scores.Thirty;
-            if (player1Point == 3)
-                firstPlayer.Result = Constants.Scores.Forty;
-
-            secondPlayer.Result = Constants.Scores.Love;
-            score = firstPlayer.Result + "-" + secondPlayer.Result;
-        }
-
-        if (player2Point >  Constants.Scores.LoveScore && player1Point ==  Constants.Scores.LoveScore)
-        {
-            if (player2Point == 1)
-                secondPlayer.Result = Constants.Scores.Fifteen;
-            if (player2Point == 2)
-                secondPlayer.Result = Constants.Scores.Thirty;
-            if (player2Point == 3)
-                secondPlayer.Result = Constants.Scores.Forty;
-
-            firstPlayer.Result = Constants.Scores.Love;
-            score = firstPlayer.Result + "-" + secondPlayer.Result;
-        }
-
-        if (player1Point > player2Point && player1Point < Constants.Scores.WinScore)
-        {
-            if (player1Point == 2)
-                firstPlayer.Result = Constants.Scores.Thirty;
-            if (player1Point == 3)
-                firstPlayer.Result = Constants.Scores.Forty;
-            if (player2Point == 1)
-                secondPlayer.Result = Constants.Scores.Fifteen;
-            if (player2Point == 2)
-                secondPlayer.Result = Constants.Scores.Thirty;
-            score = firstPlayer.Result + "-" + secondPlayer.Result;
-        }
-
-        if (player2Point > player1Point && player2Point < Constants.Scores.WinScore)
-        {
-            if (player2Point == 2)
-                secondPlayer.Result = Constants.Scores.Thirty;
-            if (player2Point == 3)
-                secondPlayer.Result = Constants.Scores.Forty;
-            if (player1Point == 1)
-                firstPlayer.Result = Constants.Scores.Fifteen;
-            if (player1Point == 2)
-                firstPlayer.Result = Constants.Scores.Thirty;
-            score = firstPlayer.Result + "-" + secondPlayer.Result;
-        }
-
-        if (player1Point > player2Point && player2Point >= 3)
-        {
-            score = Constants.Scores.AdvantagePlayer1;
-        }
-
-        if (player2Point > player1Point && player1Point >= 3)
-        {
-            score = Constants.Scores.AdvantagePlayer2;
-        }
-
-        if (player1Point >= Constants.Scores.WinScore && player2Point >= Constants.Scores.LoveScore && (player1Point - player2Point) >= Constants.Scores.MinDifferenceForWin)
-        {
-            score = Constants.Scores.WinForPlayer1;
-        }
-
-        if (player2Point >= Constants.Scores.WinScore && player1Point >= Constants.Scores.LoveScore && (player2Point - player1Point) >= Constants.Scores.MinDifferenceForWin)
-        {
-            score = Constants.Scores.WinForPlayer2;
-        }
-
-        return score;
+            0 => Constants.Scores.Love,
+            1 => Constants.Scores.Fifteen,
+            2 => Constants.Scores.Thirty,
+            3 => Constants.Scores.Forty,
+            _ => Constants.Scores.Deuce
+        };
     }
 }
