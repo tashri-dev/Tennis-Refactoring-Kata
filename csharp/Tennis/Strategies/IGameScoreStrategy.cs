@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Tennis.Strategies;
 
 public interface IGameScoreStrategy
@@ -33,7 +35,7 @@ public class FortyScoreStrategy : IGameScoreStrategy
 {
     public string GetScore(int player1Score, int player2Score)
     {
-        return player1Score == player2Score ? Constants.Scores.Deuce: Constants.Scores.Forty;
+        return player1Score == player2Score ? Constants.Scores.Deuce : Constants.Scores.Forty;
     }
 }
 
@@ -41,7 +43,7 @@ public class DeuceScoreStrategy : IGameScoreStrategy
 {
     public string GetScore(int player1Score, int player2Score)
     {
-        return "Deuce";
+        return Constants.Scores.Deuce;
     }
 }
 
@@ -49,12 +51,13 @@ public class AdvantageOrWinScoreStrategy() : IGameScoreStrategy
 {
     public string GetScore(int player1Score, int player2Score)
     {
-        string score;
         var minusResult = player1Score - player2Score;
-        if (minusResult == 1) score = Constants.Scores.AdvantagePlayer1;
-        else if (minusResult == -1) score = Constants.Scores.AdvantagePlayer2;
-        else if (minusResult >= 2) score = Constants.Scores.WinForPlayer1;
-        else score = Constants.Scores.WinForPlayer2;
-        return score;
+        return minusResult switch
+        {
+            1 => Constants.Scores.AdvantagePlayer1,
+            -1 => Constants.Scores.AdvantagePlayer2,
+            >= Constants.Scores.MinDifferenceForWin => Constants.Scores.WinForPlayer1,
+            _ => Constants.Scores.WinForPlayer2
+        };
     }
 }

@@ -1,70 +1,52 @@
 using System;
+using System.Collections.Generic;
+using Tennis.Strategies;
 
 namespace Tennis;
+
 //todo: fix the miss of the calculations with delgates or startegy pattern
 public class ScoreManager
 {
+    private static Dictionary<int, IGameScoreStrategy> Scores;
+
+    public ScoreManager()
+    {
+        Scores = new Dictionary<int, IGameScoreStrategy>
+        {
+            [(int)Constants.ScoreType.Love] = new LoveScoreStrategy(),
+            [(int)Constants.ScoreType.Fifteen] = new FifteenScoreStrategy(),
+            [(int)Constants.ScoreType.Thirty] = new ThirtyScoreStrategy(),
+            [(int)Constants.ScoreType.Forty] = new FortyScoreStrategy(),
+            [(int)Constants.ScoreType.Deuce] = new DeuceScoreStrategy(),
+            [(int)Constants.ScoreType.Advantage] = new AdvantageOrWinScoreStrategy(),
+        };
+    }
+
     public string CalculateScore(int player1Score, int player2Score)
     {
         if (player1Score == player2Score)
         {
-            return CalculateDrawScore(player1Score);
+            return CalculateDrawScore(player1Score, player2Score);
         }
-        if (player1Score >= 4 || player2Score >= 4)
+
+        if (player1Score >= Constants.Scores.WinScore || player2Score >= Constants.Scores.WinScore)
         {
-            return CheckResult(player1Score, player2Score);
+            return Scores[(int)Constants.ScoreType.Advantage].GetScore(player1Score, player2Score);
         }
+
         return AddScores(player1Score, player2Score);
     }
 
-    private string CheckResult(int player1Score, int player2Score)
+    private string CalculateDrawScore(int player1Score, int player2Score)
     {
-        string score;
-        var minusResult = player1Score - player2Score;
-        if (minusResult == 1) score = Constants.Scores.AdvantagePlayer1;
-        else if (minusResult == -1) score = Constants.Scores.AdvantagePlayer2;
-        else if (minusResult >= 2) score = Constants.Scores.WinForPlayer1;
-        else score = Constants.Scores.WinForPlayer2;
-        return score;
+        string score = Scores[player1Score].GetScore(player1Score, player2Score);
+        return player1Score < 3 ? score + Constants.Scores.All : score;
     }
 
 
-    private string CalculateDrawScore(int playerScore)
-    {
-        string score = playerScore switch
-        {
-            0 => Constants.Scores.Love_All,
-            1 => Constants.Scores.Fifteen_All,
-            2 => Constants.Scores.Thirty_All,
-            _ => Constants.Scores.Deuce
-        };
-        return score;
-    }
-    
-    
     private string AddScores(int player1score, int player2score)
     {
-        string score = "";
-        for (var i = 1; i < 3; i++)
-        {
-            var tempScore = 0;
-            if (i == 1) tempScore = player1score;
-            else
-            {
-                score += "-";
-                tempScore = player2score;
-            }
-           
-            score += tempScore switch
-            {
-                0 => Constants.Scores.Love,
-                1 => Constants.Scores.Fifteen,
-                2 => Constants.Scores.Thirty,
-                3 => Constants.Scores.Forty
-            };
-
-        }
-
-        return score;
+        return Scores[player1score].GetScore(player1score, player2score) + "-" +
+               Scores[player2score].GetScore(player1score, player2score);
     }
 }
